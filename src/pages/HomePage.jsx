@@ -5,14 +5,8 @@ function HomePage() {
         <div>
             <Navbar />
 
-            <nav className="navbar navbar-dark bg-primary mb-3">
-                <div className="container">
-                <a className="navbar-brand" href="/">WikiCountries</a>
-                </div>
-            </nav>
-
-            <div className="container" style="max-height: 90vh; overflow: scroll">
-                <h1 style="font-size: 24px">WikiCountries: Your Guide to the World</h1>
+            <div className="container" style={{ maxHeight: "90vh", overflow: "scroll" }}>
+                <h1 style={{ fontSize: "24px" }}>WikiCountries: Your Guide to the World</h1>
 
                 <div className="list-group">
                     <a className="list-group-item list-group-item-action" href="/ABW"
@@ -73,9 +67,9 @@ function HomePage() {
                     
                     <a className="list-group-item list-group-item-action" href="/ZWE"
                         >🇿🇼 Zimbabwe
-                    </a>
-                    
+                    </a>        
                 </div>
+                
             </div>
         </div>
     )

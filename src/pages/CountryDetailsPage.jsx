@@ -5,13 +5,6 @@ function CountryDetails() {
         <div>
             <Navbar />
 
-            <nav className="navbar navbar-dark bg-primary mb-3">
-                <div className="container">
-                <a className="navbar-brand" href="/">WikiCountries</a>
-                </div>
-            </nav>
-
-            {/* <!-- Bootstrap container wrapper div --> */}
             <div className="container">
                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>Country Details</p>
 
