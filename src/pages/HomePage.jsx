@@ -1,78 +1,48 @@
 import Navbar from "../components/Navbar";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function HomePage() {
-    return (
-        <div>
-            <Navbar />
+  const [countryList, setCountryList] = useState([]);
 
-            <div className="container" style={{ maxHeight: "90vh", overflow: "scroll" }}>
-                <h1 style={{ fontSize: "24px" }}>WikiCountries: Your Guide to the World</h1>
+  useEffect(() => {
+    console.log("countries");
+    axios
+      .get("https://ih-countries-api.herokuapp.com/countries")
+      .then((countries) => {
+        setCountryList(countries.data);
+      })
+      .catch((error) => console.error("error message", error));
+  }, []);
 
-                <div className="list-group">
-                    <a className="list-group-item list-group-item-action" href="/ABW"
-                        >🇦🇼 Aruba
-                    </a>
+  return (
+    <div>
+      <Navbar />
 
-                    <a className="list-group-item list-group-item-action" href="/AFG"
-                        >🇦🇫 Afghanistan
-                    </a>
+      <div
+        className="container"
+        style={{ maxHeight: "90vh", overflow: "scroll" }}>
 
-                    <a className="list-group-item list-group-item-action" href="/AGO"
-                        >🇦🇴 Angola
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/AIA"
-                        >🇦🇮 Anguilla
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ALA"
-                        >🇦🇽 Åland Islands
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ALB"
-                        >🇦🇱 Albania
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/AND"
-                        >🇦🇩 Andorra
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ARE"
-                        >🇦🇪 United Arab Emirates
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ARG"
-                        >🇦🇷 Argentina
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ARM"
-                        >🇦🇲 Armenia
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ASM"
-                        >🇦🇸 American Samoa
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ATA"
-                        >🇦🇶 Antarctica
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/FLK"
-                        >🇫🇰 Falkland Islands
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action active" href="/FRA"
-                        >🇫🇷 France
-                    </a>
-                    
-                    <a className="list-group-item list-group-item-action" href="/ZWE"
-                        >🇿🇼 Zimbabwe
-                    </a>        
-                </div>
-                
-            </div>
+        <h1 style={{ fontSize: "24px" }}>
+          WikiCountries: Your Guide to the World
+        </h1>
+
+        <div className="list-group">
+
+          {countryList ? 
+            countryList.map((country)=> {
+              return (
+                <a className="list-group-item list-group-item-action" key={country.name.official} href={`/${country.alpha3Code}`}>
+                    {country.name.official}
+                </a>
+              )
+            })
+          : null}
+
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
 export default HomePage;
