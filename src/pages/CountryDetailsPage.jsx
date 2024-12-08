@@ -5,18 +5,26 @@ import Navbar from "../components/Navbar";
 
 function CountryDetailsPage() {
     const { alpha3Code } = useParams();
-    const [countryDetails, setCountryDetails] = useState({});
+    const [countryDetails, setCountryDetails] = useState(null);
 
     useEffect(() => {
         if (alpha3Code) {
             axios
                 .get(`https://ih-countries-api.herokuapp.com/countries/${alpha3Code}`)
                 .then((response) => {
-                setCountryDetails(response.data);
+                    setCountryDetails(response.data);
                 })
                 .catch((error) => console.error("error message", error));
         }
     }, [alpha3Code]);
+
+    if (!countryDetails) {
+        return (
+          <div>
+            <p>Loading...</p>
+          </div>
+        );
+    }
 
     return (
         <div>
