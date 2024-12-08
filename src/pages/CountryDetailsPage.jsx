@@ -1,6 +1,23 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams, Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
-function CountryDetails() {
+function CountryDetailsPage() {
+    const { alpha3Code } = useParams();
+    const [countryDetails, setCountryDetails] = useState({});
+
+    useEffect(() => {
+        if (alpha3Code) {
+            axios
+                .get(`https://ih-countries-api.herokuapp.com/countries/${alpha3Code}`)
+                .then((response) => {
+                setCountryDetails(response.data);
+                })
+                .catch((error) => console.error("error message", error));
+        }
+    }, [alpha3Code]);
+
     return (
         <div>
             <Navbar />
@@ -8,19 +25,25 @@ function CountryDetails() {
             <div className="container">
                 <p style={{ fontSize: "24px", fontWeight: "bold" }}>Country Details</p>
 
-                <h1>France</h1>
+                <h1>{countryDetails.name?.common}</h1>  
+                {/* MUY IMPORTANTE EL ? SIN ÉL NO FUNCIONA */}
+                <img
+                    src={`https://flagpedia.net/data/flags/icon/72x54/${countryDetails.alpha2Code.toLowerCase()}.png`}
+                    alt={`${countryDetails.name.common} flag`}
+                    style={{ display: "block", margin: "20px auto" }}                    
+                />
 
                 <table className="table">
                 <thead></thead>
                 <tbody>
                     <tr>
                     <td style={{ width: "30%" }}>Capital</td>
-                    <td>Paris</td>
+                    <td>{countryDetails.capital}</td>
                     </tr>
                     <tr>
                     <td>Area</td>
                     <td>
-                        551695 km
+                        {countryDetails.area} km
                         <sup>2</sup>
                     </td>
                     </tr>
@@ -28,14 +51,14 @@ function CountryDetails() {
                     <td>Borders</td>
                     <td>
                         <ul>
-                        <li><a href="/AND">Andorra</a></li>
-                        <li><a href="/BEL">Belgium</a></li>
-                        <li><a href="/DEU">Germany</a></li>
-                        <li><a href="/ITA">Italy</a></li>
-                        <li><a href="/LUX">Luxembourg</a></li>
-                        <li><a href="/MCO">Monaco</a></li>
-                        <li><a href="/ESP">Spain</a></li>
-                        <li><a href="/CHE">Switzerland</a></li>
+                            {countryDetails.borders ? countryDetails.borders.map((border) => {
+                                    return (
+                                    <li key={border}>
+                                        <Link to={`/${border}`}>{border}</Link>
+                                    </li>
+                                    );
+                                })
+                                : null}
                         </ul>
                     </td>
                     </tr>
@@ -46,4 +69,4 @@ function CountryDetails() {
     )
 }
 
-export default CountryDetails;
+export default CountryDetailsPage;
