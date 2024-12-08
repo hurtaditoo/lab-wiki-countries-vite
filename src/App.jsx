@@ -9,9 +9,9 @@ function App() {
 
       <Routes>
         <Route path="/" element= {<HomePage/>} />
-        <Route path="/:country" element= {<CountryDetails/>} />
+        <Route path="/:alpha3Code" element= {<CountryDetails/>} />
       </Routes>
-      
+
     </div>
   );
 }

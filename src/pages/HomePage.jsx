@@ -1,12 +1,12 @@
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
 
 function HomePage() {
   const [countryList, setCountryList] = useState([]);
 
   useEffect(() => {
-    console.log("countries");
     axios
       .get("https://ih-countries-api.herokuapp.com/countries")
       .then((countries) => {
@@ -32,9 +32,14 @@ function HomePage() {
           {countryList ? 
             countryList.map((country)=> {
               return (
-                <a className="list-group-item list-group-item-action" key={country.name.official} href={`/${country.alpha3Code}`}>
+                <Link 
+                    className="list-group-item list-group-item-action" 
+                    key={country.name.official} 
+                    to={`/${country.alpha3Code}`}
+                >
+                    <img style={{ height: "15px", padding: "1px" }} src={`https://flagpedia.net/data/flags/icon/72x54/${country.alpha2Code.toLowerCase()}.png`} alt="Country flag" />
                     {country.name.official}
-                </a>
+                </Link>
               )
             })
           : null}
